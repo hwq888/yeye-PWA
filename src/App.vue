@@ -40,79 +40,79 @@
     },
     created () {
       // TODO add service worker code here
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-          .register('./sw.js', {scope: '/'})
-          .then(function () { console.log('Service Worker Registered') })
-      }
-
-      // // 用户监听 Notification 的事件
-      // navigator.serviceWorker.addEventListener('message', function (e) {
-      //   var action = e.data
-      //   console.log(`receive post-message from sw, action is '${e.data}'`)
-      //   switch (action) {
-      //     case 'show-book':
-      //       location.href = 'https://book.douban.com/subject/20515024/'
-      //       break
-      //     case 'contact-me':
-      //       location.href = 'mailto:someone@sample.com'
-      //       break
-      //     default:
-      //       document.querySelector('.panel').classList.add('show')
-      //       break
-      //   }
-      // })
-      //
-      // // 获取提醒权限
-      // function askPermission () {
-      //   return new Promise(function (resolve, reject) {
-      //     var permissionResult = Notification.requestPermission(function (result) {
-      //       resolve(result)
-      //     })
-      //
-      //     if (permissionResult) {
-      //       permissionResult.then(resolve, reject)
-      //     }
-      //   }).then(function (permissionResult) {
-      //     if (permissionResult !== 'granted') {
-      //       throw new Error('We weren\'t granted permission.')
-      //     }
-      //   })
-      // }
-      //
       // if ('serviceWorker' in navigator) {
-      //   navigator.serviceWorker.register('./sw.js', {scope: '/'})
-      //     .then(function (registration) {
-      //       return Promise.all([
-      //         registration,
-      //         askPermission()
-      //       ])
-      //     })
-      //     .then((result) => {
-      //       setTimeout(() => {
-      //         const registration = result[0]
-      //         /* ===== 添加提醒功能 ====== */
-      //         // document.querySelector('#js-notification-btn').addEventListener('click', function () {
-      //         const title = 'PWA即学即用'
-      //         const options = {
-      //           body: '邀请你一起学习',
-      //           icon: './static/images/bank/0102.png',
-      //           actions: [{
-      //             action: 'show-book',
-      //             title: '去看看'
-      //           }, {
-      //             action: 'contact-me',
-      //             title: '联系我'
-      //           }],
-      //           tag: 'pwa-starter',
-      //           renotify: true
-      //         }
-      //         registration.showNotification(title, options)
-      //         // })
-      //       }, 500)
-      //     })
+      //   navigator.serviceWorker
+      //     .register('./sw.js', {scope: '/'})
       //     .then(function () { console.log('Service Worker Registered') })
       // }
+
+      // 用户监听 Notification 的事件
+      navigator.serviceWorker.addEventListener('message', function (e) {
+        var action = e.data
+        console.log(`receive post-message from sw, action is '${e.data}'`)
+        switch (action) {
+          case 'show-book':
+            location.href = 'https://github.com/hwq888/yeye-PWA'
+            break
+          case 'contact-me':
+            location.href = 'hwq888_ok@163.com'
+            break
+          default:
+            document.querySelector('.panel').classList.add('show')
+            break
+        }
+      })
+
+      // 获取提醒权限
+      function askPermission () {
+        return new Promise(function (resolve, reject) {
+          var permissionResult = Notification.requestPermission(function (result) {
+            resolve(result)
+          })
+
+          if (permissionResult) {
+            permissionResult.then(resolve, reject)
+          }
+        }).then(function (permissionResult) {
+          if (permissionResult !== 'granted') {
+            throw new Error('We weren\'t granted permission.')
+          }
+        })
+      }
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js', {scope: '/'})
+          .then(function (registration) {
+            return Promise.all([
+              registration,
+              askPermission()
+            ])
+          })
+          .then((result) => {
+            setTimeout(() => {
+              const registration = result[0]
+              /* ===== 添加提醒功能 ====== */
+              // document.querySelector('#js-notification-btn').addEventListener('click', function () {
+              const title = 'PWA即学即用'
+              const options = {
+                body: '邀请你一起学习',
+                icon: './static/images/bank/0102.png',
+                actions: [{
+                  action: 'show-book',
+                  title: '去看看'
+                }, {
+                  action: 'contact-me',
+                  title: '联系我'
+                }],
+                tag: 'pwa-starter',
+                renotify: true
+              }
+              registration.showNotification(title, options)
+              // })
+            }, 500)
+          })
+          .then(function () { console.log('Service Worker Registered') })
+      }
     },
     mounted () {
       let _this = this
