@@ -10,6 +10,7 @@ const state = {
   ProjectName: '',
   showHeader: '',
   headerTitle: '',
+  offlineShow: false, // 是否显示无网络
   loadingShow: false,
   toastShow: false,
   toastMsg: '',
@@ -71,6 +72,10 @@ const mutations = {
   // loading更新
   UPDATE_LOADING (state, data) {
     state.loadingShow = data
+  },
+  // 是否显示无网络
+  UPDATE_OfflineShow (state, data) {
+    state.offlineShow = data
   }
 }
 

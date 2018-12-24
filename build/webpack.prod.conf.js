@@ -94,6 +94,13 @@ const webpackConfig = merge(baseWebpackConfig, {
       webpackConfig: require('./webpack.skeleton.conf'),
       quiet: true
     }),
+    // 这里复制sw文件到输出的地方，生产环境下输出到dist 路径下
+    new CopyWebpackPlugin([
+      {
+        from: 'service-worker.js',
+        to: 'sw.js'
+      }
+    ]),
     // keep module.id stable when vender modules does not change
     new webpack.HashedModuleIdsPlugin(),
     // enable scope hoisting

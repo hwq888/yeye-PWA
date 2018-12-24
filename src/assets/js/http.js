@@ -26,11 +26,10 @@ axios.interceptors.request.use(config => {
 
 // http响应拦截器
 axios.interceptors.response.use(data => { // 响应成功关闭loading
-  // debugger
-  // console.log(data)
   // console.log(data.headers['content-type'])
-  if (data.headers['content-type'].indexOf('text/html') > -1) {
-    location.href = './offline.html'
+  if (data.data.code === 'offline') {
+    store.commit('UPDATE_LOADING', false)
+    store.commit('UPDATE_OfflineShow', true)
   } else {
     let code = Number(data.data.code)
     switch (code) {

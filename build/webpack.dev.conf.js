@@ -10,6 +10,7 @@ const portfinder = require('portfinder')
 const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
 const path = require('path')
 const manifestPlugin = require('pwa-manifest-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -75,7 +76,14 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new SkeletonWebpackPlugin({
       webpackConfig: require('./webpack.skeleton.conf'),
       quiet: true
-    })
+    }),
+    // 这里复制sw文件到输出的地方，生产环境下输出到dist 路径下
+    new CopyWebpackPlugin([
+      {
+        from: 'service-worker.js',
+        to: 'sw.js'
+      }
+    ])
   ]
 })
 
